@@ -1,5 +1,4 @@
 import { z } from "zod";
-import dotenv from "dotenv";
 
 const envSchema = z.object({
   NODE_ENV: z.string().default("production"),
@@ -18,20 +17,7 @@ const envSchema = z.object({
 export type Env = z.infer<typeof envSchema>;
 
 export function loadEnv(): Env {
-  dotenv.config();
-  const baseEnv = process.env.NODE_ENV ?? "development";
-  const merged = {
-    ...process.env,
-    NODE_ENV: baseEnv,
-    API_KEY: process.env.API_KEY ?? (baseEnv !== "production" ? "dev-api-key" : undefined),
-    UPSTASH_REDIS_REST_URL:
-      process.env.UPSTASH_REDIS_REST_URL ??
-      (baseEnv !== "production" ? "https://dev-upstash.example" : undefined),
-    UPSTASH_REDIS_REST_TOKEN:
-      process.env.UPSTASH_REDIS_REST_TOKEN ?? (baseEnv !== "production" ? "dev-upstash-token" : undefined),
-    FCM_SERVER_KEY: process.env.FCM_SERVER_KEY ?? (baseEnv !== "production" ? "dev-fcm-key" : undefined)
-  };
-  const parsed = envSchema.safeParse(merged);
+  const parsed = envSchema.safeParse(process.env);
   if (!parsed.success) {
     throw new Error(`Invalid environment: ${parsed.error.message}`);
   }
