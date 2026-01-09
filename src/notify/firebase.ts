@@ -1,17 +1,29 @@
 import admin from "firebase-admin";
-import type { Env } from "../config/env.js";
+import { loadEnv } from "../config/env.js";
 
-let firebaseApp: admin.app.App | null = null;
+let initialized = false;
 
-export function getFirebaseApp(env: Env): admin.app.App {
-  if (firebaseApp) return firebaseApp;
-  if (admin.apps.length > 0) {
-    firebaseApp = admin.apps[0]!;
-    return firebaseApp;
-  }
-  const serviceAccount = JSON.parse(env.FIREBASE_SERVICE_ACCOUNT_JSON) as admin.ServiceAccount;
-  firebaseApp = admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+function initFirebase() {
+  if (initialized) return;
+
+  const env = loadEnv();
+
+  const serviceAccount = JSON.parse(
+    env.FIREBASE_SERVICE_ACCOUNT_JSON
+  ) as admin.ServiceAccount;
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
   });
-  return firebaseApp;
+
+  initialized = true;
+}
+
+/**
+ * Returns the Firebase Messaging instance.
+ * Ensures Firebase is initialized exactly once.
+ */
+export function getMessaging() {
+  initFirebase();
+  return admin.messaging();
 }

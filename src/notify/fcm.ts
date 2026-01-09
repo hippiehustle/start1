@@ -1,55 +1,30 @@
-import type { Logger } from "pino";
-import type { Env } from "../config/env.js";
-import { getFirebaseApp } from "./firebase.js";
+// Modern FCM sender (HTTP v1) via Firebase Admin SDK.
+// Kept in fcm.ts to preserve existing import paths ("../notify/fcm.js")
+// while removing legacy server-key based messaging.
 
-export type FcmPayload = {
-  title: string;
-  body: string;
-  data: Record<string, string>;
-};
+import type { Message } from "firebase-admin/messaging";
+import { getMessaging } from "./firebase.js";
 
-export async function sendFcm(
-  env: Env,
-  log: Logger,
-  tokens: string[],
-  payload: FcmPayload
-) {
-  if (tokens.length === 0) {
-    log.info("No FCM tokens to send to");
-    return;
-  }
+/**
+ * Backwards-compatible function name used elsewhere in the codebase.
+ * Sends to a single device token.
+ */
+export async function sendFcm(token: string, title: string, body: string, data?: Record<string, string>) {
+  const message: Message = {
+    token,
+    notification: { title, body },
+    data
+  };
 
   try {
-    const app = getFirebaseApp(env);
-    const messaging = app.messaging();
+    await getMessaging().send(message);
+  } catch (err: any) {
+    // Don't crash the whole process on push failures.
+    // Consider removing invalid tokens if you store them.
+    const code = err?.errorInfo?.code || err?.code;
+    console.error("FCM send error:", code, err?.message || err);
 
-    const message = {
-      notification: {
-        title: payload.title,
-        body: payload.body
-      },
-      data: payload.data
-    };
-
-    // Send to multiple tokens
-    const responses = await messaging.sendEachForMulticast({
-      tokens,
-      ...message
-    });
-
-    if (responses.failureCount > 0) {
-      const failedTokens: string[] = [];
-      responses.responses.forEach((resp, idx) => {
-        if (!resp.success) {
-          failedTokens.push(tokens[idx]);
-          log.error({ error: resp.error?.message }, `Failed to send FCM to token ${idx}`);
-        }
-      });
-      log.warn({ failedCount: responses.failureCount, failedTokens }, "Some FCM messages failed");
-    } else {
-      log.info({ successCount: responses.successCount }, "All FCM messages sent successfully");
-    }
-  } catch (error) {
-    log.error({ error }, "Failed to send FCM messages");
+    // Optional: swallow invalid/expired tokens quietly
+    // messaging/registration-token-not-registered is common
   }
 }

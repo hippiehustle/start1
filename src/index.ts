@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { pino } from "pino";
 import { loadEnv } from "./config/env.js";
 import { createRedis } from "./store/redis.js";
