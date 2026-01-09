@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kaos EV Scanner</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_widgets">Widgets</string>
+    <string name="nav_help">Help</string>
+    <string name="nav_links">Links</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">EV Crypto Scanner</string>
+    <string name="refresh">Refresh</string>
+    <string name="run_scan">Run Scan Now</string>
+    <string name="copy_plan">Copy Plan</string>
+    <string name="share_plan">Share Plan</string>
+    <string name="last_updated">Last updated: %s</string>
+    <string name="backend_healthy">Backend Healthy</string>
+    <string name="backend_unreachable">Backend Unreachable</string>
+    <string name="readiness_score">Readiness: %d%%</string>
+    <string name="no_data">No scan data available</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="base_url">Backend URL</string>
+    <string name="base_url_hint">https://your-backend.fly.dev</string>
+    <string name="api_key">API Key</string>
+    <string name="api_key_hint">Enter your API key</string>
+    <string name="auto_refresh">Auto Refresh Interval</string>
+    <string name="notifications_enabled">Enable Notifications</string>
+    <string name="test_notification">Test Notification</string>
+    <string name="test_connection">Test Connection</string>
+    <string name="smart_notifications">Smart Notifications</string>
+    <string name="smart_notifications_desc">Only notify on BUY or readiness ≥70%</string>
+    <string name="connection_success">Connection successful!</string>
+    <string name="connection_failed">Connection failed: %s</string>
+
+    <!-- Refresh Intervals -->
+    <string name="interval_off">Off</string>
+    <string name="interval_15">15 minutes</string>
+    <string name="interval_30">30 minutes</string>
+    <string name="interval_60">1 hour</string>
+    <string name="interval_120">2 hours</string>
+
+    <!-- Widget Customizer -->
+    <string name="widget_customizer_title">Widget Customizer</string>
+    <string name="add_widget_config">Add Widget</string>
+    <string name="widget_template">Widget Template</string>
+    <string name="widget_theme">Theme</string>
+    <string name="content_density">Content Density</string>
+    <string name="auto_refresh_widget">Auto Refresh</string>
+    <string name="show_readiness">Show Readiness</string>
+    <string name="show_timestamp">Show Timestamp</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Widget Templates -->
+    <string name="template_minimal">Minimal Badge</string>
+    <string name="template_compact">Compact Card</string>
+    <string name="template_full_plan">Full Plan</string>
+    <string name="template_targets">Targets/Stops</string>
+    <string name="template_matrix">Matrix</string>
+
+    <!-- Themes -->
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+
+    <!-- Density -->
+    <string name="density_minimal">Minimal</string>
+    <string name="density_medium">Medium</string>
+    <string name="density_dense">Dense</string>
+
+    <!-- Help -->
+    <string name="help_title">Help</string>
+    <string name="help_states_title">Trade States</string>
+    <string name="help_states_buy">BUY: High probability setup detected. Entry, stops, and targets are provided.</string>
+    <string name="help_states_wait">SETUP FORMING — WAIT: Potential setup developing. Monitor but don\'t enter yet.</string>
+    <string name="help_states_no_trade">NO TRADE: No viable setup. Stay out.</string>
+    <string name="help_readiness_title">Readiness Score</string>
+    <string name="help_readiness_desc">0-100 score indicating setup quality. Higher = better. Alerts trigger at 70+.</string>
+    <string name="help_stops_title">Using Stops and Targets</string>
+    <string name="help_stops_desc">Always use provided stop-loss. Take partial profits at TP1, TP2 as specified.</string>
+    <string name="help_troubleshoot_title">Troubleshooting</string>
+    <string name="help_troubleshoot_no_data">No Data: Check backend URL and API key in Settings.</string>
+    <string name="help_troubleshoot_auth">Auth Error: Verify API key matches backend configuration.</string>
+    <string name="help_troubleshoot_down">Backend Down: Check Fly.io dashboard for service status.</string>
+
+    <!-- Links -->
+    <string name="links_title">Useful Links</string>
+    <string name="open_coinbase">Open Coinbase</string>
+    <string name="open_flyio">Fly.io Dashboard</string>
+    <string name="copy_backend_url">Copy Backend URL</string>
+    <string name="url_copied">URL copied!</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_trade_alerts">Trade Alerts</string>
+    <string name="notification_channel_setup_alerts">Setup Alerts</string>
+    <string name="notification_test_title">Test Notification</string>
+    <string name="notification_test_body">Notifications are working!</string>
+
+    <!-- Errors -->
+    <string name="error_network">Network error. Using cached data.</string>
+    <string name="error_auth">Authentication failed. Check API key.</string>
+    <string name="error_unknown">An error occurred: %s</string>
+
+    <!-- Widget Info -->
+    <string name="widget_minimal_badge_name">Minimal Badge</string>
+    <string name="widget_minimal_badge_desc">State + Coin</string>
+    <string name="widget_compact_card_name">Compact Card</string>
+    <string name="widget_compact_card_desc">State + Readiness + Time</string>
+    <string name="widget_full_plan_name">Full Plan</string>
+    <string name="widget_full_plan_desc">Complete scan output</string>
+    <string name="widget_targets_stops_name">Targets/Stops</string>
+    <string name="widget_targets_stops_desc">Entry, stops, targets</string>
+    <string name="widget_matrix_name">Matrix View</string>
+    <string name="widget_matrix_desc">Multi-metric grid</string>
+</resources>
