@@ -19,7 +19,3 @@ export function normalizeCandles(raw: number[][]): Candle[] {
     }))
     .sort((a, b) => a.time - b.time);
 }
-
-export function lastCandles(candles: Candle[], count: number) {
-  return candles.slice(-count);
-}

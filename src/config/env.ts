@@ -6,7 +6,7 @@ const envSchema = z.object({
   API_KEY: z.string().min(8),
   UPSTASH_REDIS_REST_URL: z.string().url(),
   UPSTASH_REDIS_REST_TOKEN: z.string().min(10),
-  FCM_SERVER_KEY: z.string().min(10),
+  FIREBASE_SERVICE_ACCOUNT_JSON: z.string().min(50),
   COINBASE_WS_URL: z.string().url().default("wss://ws-feed.exchange.coinbase.com"),
   COINBASE_REST_BASE: z.string().url().default("https://api.exchange.coinbase.com"),
   LIQ_SPREAD_BPS_MAX: z.coerce.number().default(50),

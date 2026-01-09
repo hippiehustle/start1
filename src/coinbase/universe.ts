@@ -1,5 +1,5 @@
 import type { Logger } from "pino";
-import type { CoinbaseRestClient, Product } from "./rest.js";
+import type { CoinbaseRestClient } from "./rest.js";
 
 export type UniverseSnapshot = {
   productIds: string[];
@@ -62,8 +62,4 @@ export class ProductUniverse {
   getSnapshot() {
     return this.snapshot;
   }
-}
-
-export function isUsdProduct(product: Product) {
-  return product.id.endsWith("-USD");
 }

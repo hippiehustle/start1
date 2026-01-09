@@ -1,7 +1,7 @@
 import type { Logger } from "pino";
 import type { RedisClient } from "../store/redis.js";
-import { mean, pctChange, clamp } from "../utils/math.js";
-import { normalizeCandles, lastCandles } from "../utils/candles.js";
+import { mean, clamp } from "../utils/math.js";
+import { normalizeCandles } from "../utils/candles.js";
 import { findSupportResistance, isNear } from "../utils/levels.js";
 import type { ScanResult, RegimeState, ProductMetrics } from "./types.js";
 import type { Env } from "../config/env.js";
@@ -143,7 +143,6 @@ export class ScannerEngine {
   }
 
   private scoreProduct(metrics: ProductMetrics, regime: RegimeState, guardrail: number) {
-    const candles1h = normalizeCandles(metrics.candles1h);
     const candles1d = normalizeCandles(metrics.candles1d);
     if (candles1d.length < 20) return null;
 

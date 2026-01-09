@@ -19,7 +19,7 @@ Production-ready backend for the Coinbase live-data “EV Crypto Scanner” syst
 | API_KEY | API key for protected routes | (required) |
 | UPSTASH_REDIS_REST_URL | Upstash REST URL | (required) |
 | UPSTASH_REDIS_REST_TOKEN | Upstash REST token | (required) |
-| FCM_SERVER_KEY | Firebase legacy server key | (required) |
+| FIREBASE_SERVICE_ACCOUNT_JSON | Firebase Admin SDK service account JSON | (required) |
 | COINBASE_WS_URL | Coinbase WS URL | wss://ws-feed.exchange.coinbase.com |
 | COINBASE_REST_BASE | Coinbase REST base | https://api.exchange.coinbase.com |
 | LIQ_SPREAD_BPS_MAX | Max spread bps | 50 |
@@ -36,7 +36,7 @@ Create a `.env` file or export env vars:
 export API_KEY=your-key
 export UPSTASH_REDIS_REST_URL=https://...
 export UPSTASH_REDIS_REST_TOKEN=...
-export FCM_SERVER_KEY=...
+export FIREBASE_SERVICE_ACCOUNT_JSON='{"type":"service_account",...}'
 ```
 
 ## Running Locally
@@ -54,7 +54,7 @@ npm test
 2. Create the app and set secrets:
 ```bash
 fly apps create kaos-ev-scanner-backend
-fly secrets set API_KEY=... UPSTASH_REDIS_REST_URL=... UPSTASH_REDIS_REST_TOKEN=... FCM_SERVER_KEY=...
+fly secrets set API_KEY=... UPSTASH_REDIS_REST_URL=... UPSTASH_REDIS_REST_TOKEN=... FIREBASE_SERVICE_ACCOUNT_JSON=...
 fly deploy
 ```
 

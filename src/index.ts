@@ -1,4 +1,4 @@
-import pino from "pino";
+import { pino } from "pino";
 import { loadEnv } from "./config/env.js";
 import { createRedis } from "./store/redis.js";
 import { CoinbaseRestClient } from "./coinbase/rest.js";
@@ -50,7 +50,7 @@ async function bootstrap() {
     const result = await scanner.run(trackedProducts);
     if (result.state === "BUY" || (result.state === "SETUP_FORMING" && (result.readinessScore ?? 0) >= 70)) {
       const { sendFcm } = await import("./notify/fcm.js");
-      const tokens = (await redis.smembers<string>("devices:tokens")) ?? [];
+      const tokens = (await redis.smembers("devices:tokens")) ?? [];
       await sendFcm(env, log, tokens, {
         title: "EV Crypto Scan",
         body: result.output.split("\n")[0],

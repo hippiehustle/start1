@@ -20,7 +20,11 @@ export function createServer(
   collector: Collector,
   getProductIds: () => string[]
 ) {
-  const app = Fastify({ logger: log });
+  const app = Fastify({
+    logger: {
+      level: env.NODE_ENV === "production" ? "info" : "debug"
+    }
+  });
 
   app.register(rateLimit, {
     max: 60,
@@ -54,7 +58,7 @@ export function createServer(
   app.post("/scan/run", async () => {
     const result = await scanner.run(getProductIds());
     if (result.state === "BUY" || (result.state === "SETUP_FORMING" && (result.readinessScore ?? 0) >= 70)) {
-      const tokens = (await redis.smembers<string>("devices:tokens")) ?? [];
+      const tokens = (await redis.smembers("devices:tokens")) ?? [];
       await sendFcm(env, log, tokens, {
         title: "EV Crypto Scan",
         body: result.output.split("\n")[0],
