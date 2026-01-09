@@ -1,7 +1,5 @@
 import type { Logger } from "pino";
-import admin from "firebase-admin";
 import type { Env } from "../config/env.js";
-import { getFirebaseApp } from "./firebase.js";
 
 export type FcmPayload = {
   title: string;
@@ -16,28 +14,23 @@ export async function sendFcm(
   payload: FcmPayload
 ) {
   if (tokens.length === 0) return;
-  // Firebase Admin SDK is required because legacy server keys are deprecated.
-  getFirebaseApp(env);
-  await Promise.all(
-    tokens.map(async (token) => {
-      try {
-        await admin.messaging().send({
-          token,
-          notification: {
-            title: payload.title,
-            body: payload.body
-          },
-          data: payload.data
-        });
-      } catch (error) {
-        const err = error as { code?: string; message?: string };
-        const isInvalidToken = err.code === "messaging/invalid-argument" || err.code === "messaging/registration-token-not-registered";
-        if (isInvalidToken) {
-          log.warn({ err: error, token }, "FCM token invalid");
-        } else {
-          log.error({ err: error, token }, "FCM send failed");
-        }
-      }
+  const res = await fetch("https://fcm.googleapis.com/fcm/send", {
+    method: "POST",
+    headers: {
+      Authorization: `key=${env.FCM_SERVER_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      registration_ids: tokens,
+      notification: {
+        title: payload.title,
+        body: payload.body
+      },
+      data: payload.data
     })
-  );
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    log.error({ status: res.status, text }, "FCM send failed");
+  }
 }

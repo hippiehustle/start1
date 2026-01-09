@@ -23,7 +23,7 @@ const env: Env = {
   API_KEY: "test-key-123",
   UPSTASH_REDIS_REST_URL: "https://example.com",
   UPSTASH_REDIS_REST_TOKEN: "token",
-  FIREBASE_SERVICE_ACCOUNT_JSON: "{\"type\":\"service_account\",\"project_id\":\"dev\"}",
+  FCM_SERVER_KEY: "key",
   COINBASE_WS_URL: "wss://example.com",
   COINBASE_REST_BASE: "https://example.com",
   LIQ_SPREAD_BPS_MAX: 50,

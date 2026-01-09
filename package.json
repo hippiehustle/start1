@@ -15,8 +15,6 @@
   },
   "dependencies": {
     "@upstash/redis": "^1.32.0",
-    "dotenv": "^16.4.5",
-    "firebase-admin": "^12.2.0",
     "fastify": "^4.27.0",
     "@fastify/rate-limit": "^8.0.0",
     "fastify-plugin": "^4.5.0",

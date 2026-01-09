@@ -1,14 +1,10 @@
-FROM node:20-alpine AS deps
+FROM node:20-alpine AS base
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
-
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY package.json package-lock.json* ./
-COPY tsconfig.json tsconfig.build.json eslint.config.js vitest.config.ts ./
+COPY tsconfig.json eslint.config.js vitest.config.ts ./
 COPY src ./src
+COPY test ./test
 RUN npm run build
 
 FROM node:20-alpine
@@ -16,6 +12,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY package.json package-lock.json* ./
 RUN npm install --omit=dev
-COPY --from=build /app/dist ./dist
+COPY --from=base /app/dist ./dist
 EXPOSE 8080
 CMD ["node", "dist/index.js"]

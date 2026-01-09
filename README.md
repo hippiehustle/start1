@@ -19,7 +19,7 @@ Production-ready backend for the Coinbase live-data “EV Crypto Scanner” syst
 | API_KEY | API key for protected routes | (required) |
 | UPSTASH_REDIS_REST_URL | Upstash REST URL | (required) |
 | UPSTASH_REDIS_REST_TOKEN | Upstash REST token | (required) |
-| FIREBASE_SERVICE_ACCOUNT_JSON | Firebase service account JSON string (REQUIRED for push notifications) | (required) |
+| FCM_SERVER_KEY | Firebase legacy server key | (required) |
 | COINBASE_WS_URL | Coinbase WS URL | wss://ws-feed.exchange.coinbase.com |
 | COINBASE_REST_BASE | Coinbase REST base | https://api.exchange.coinbase.com |
 | LIQ_SPREAD_BPS_MAX | Max spread bps | 50 |
@@ -31,21 +31,18 @@ Production-ready backend for the Coinbase live-data “EV Crypto Scanner” syst
 npm install
 ```
 
-Create a `.env` file or export env vars (dev defaults are used when `NODE_ENV` is not `production`). Never commit service account credentials to source control.
+Create a `.env` file or export env vars:
 ```bash
 export API_KEY=your-key
 export UPSTASH_REDIS_REST_URL=https://...
 export UPSTASH_REDIS_REST_TOKEN=...
-export FIREBASE_SERVICE_ACCOUNT_JSON='{"type":"service_account","project_id":"...","private_key":"...","client_email":"..."}'
+export FCM_SERVER_KEY=...
 ```
 
 ## Running Locally
 ```bash
 npm run dev
 ```
-
-## Docker
-Pass required environment variables at runtime, including `FIREBASE_SERVICE_ACCOUNT_JSON`, via `docker run -e` or your container platform’s secret manager.
 
 ## Tests
 ```bash
@@ -54,15 +51,10 @@ npm test
 
 ## Deploy to Fly.io
 1. Install Fly CLI: https://fly.io/docs/hands-on/install-flyctl/
-2. Create the app and set secrets (credentials must be provided via Fly secrets and must never be committed to source control):
+2. Create the app and set secrets:
 ```bash
 fly apps create kaos-ev-scanner-backend
-fly secrets set API_KEY=... UPSTASH_REDIS_REST_URL=... UPSTASH_REDIS_REST_TOKEN=... FIREBASE_SERVICE_ACCOUNT_JSON='{
-  "type":"service_account",
-  "project_id":"your-project-id",
-  "private_key":"-----BEGIN PRIVATE KEY-----\nYOUR_KEY\n-----END PRIVATE KEY-----\n",
-  "client_email":"firebase-adminsdk@your-project.iam.gserviceaccount.com"
-}'
+fly secrets set API_KEY=... UPSTASH_REDIS_REST_URL=... UPSTASH_REDIS_REST_TOKEN=... FCM_SERVER_KEY=...
 fly deploy
 ```
 
