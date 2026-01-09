@@ -31,7 +31,7 @@ Production-ready backend for the Coinbase live-data “EV Crypto Scanner” syst
 npm install
 ```
 
-Create a `.env` file or export env vars (dev defaults are used when `NODE_ENV` is not `production`):
+Create a `.env` file or export env vars:
 ```bash
 export API_KEY=your-key
 export UPSTASH_REDIS_REST_URL=https://...
